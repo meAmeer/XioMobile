@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - Xio Follow Boosters</title>
+    <link rel="icon" href="./icon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@1.9.6/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.14.0/dist/full.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gotham:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.6.8/firebase-app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.6.8/firebase-auth.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.6.8/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        body {
+            font-family: 'Gotham', sans-serif;
+            background-image: url('./bg.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            color: #d1d5db;
+        }
+        .header-text {
+            font-family: 'Anton', sans-serif;
+            font-size: 2.5rem;
+            color: #4d6f38;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+        .form-container {
+            margin-top: 50px;
+        }
+        .input-box {
+            padding: 15px;
+            border: 2px solid #fbbf24;
+            border-radius: 10px;
+            background-color: rgba(31, 41, 55, 0.8);
+            color: white;
+            transition: all 0.3s;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 2px 10px rgba(255, 186, 27, 0.5);
+        }
+        .input-box::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .input-box:focus {
+            outline: none;
+            border-color: #4ade80;
+            box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+        }
+        .submit-btn {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #3b82f6; 
+            color: white;
+            font-size: 1.2rem;
+            width: 100%;
+            max-width: 400px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .submit-btn:hover {
+            background-color: #2563eb; 
+            transform: scale(1.05);
+        }
+        .submit-btn:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+        }
+        .footer-text {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="bg-gray-900 p-5 shadow-xl">
+        <div class="container mx-auto flex justify-between items-center">
+            <img src="./icon.png" alt="XIO Icon" class="icon">
+            <h1 class="header-text" tabindex="0">Xio Follow Boosters</h1>
+        </div>
+    </nav>
+    <section class="form-container text-center py-20">
+        <h2 class="text-3xl font-bold text-white mb-5">Enter Your Instagram Link</h2>
+        <input type="text" placeholder="Enter Instagram Account Link" class="input-box" id="instaLink" required>
+        <button class="submit-btn" onclick="submitLink()">Submit</button>
+    </section>
+    <footer class="bg-gradient-to-b from-[#4b5563] to-[#374151] p-5 shadow-xl text-center">
+        <p class="footer-text text-gray-400">&copy; 2023 Xio Follow Boosters - All Rights Reserved</p>
+    </footer>
+    <script>
+        function submitLink() {
+            const link = document.getElementById('instaLink').value;
+            if (link) {
+                window.location.href = `payment.html?link=${encodeURIComponent(link)}`;
+            }
+        }
+    </script>
+</body>
+</html>

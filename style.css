@@ -1,0 +1,79 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #1f1f1f;
+    color: #d1d5db;
+}
+
+h1, h2, h3 {
+    font-family: 'Gotham', sans-serif;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+nav {
+    backdrop-filter: blur(10px);
+}
+
+.btn-primary {
+    background-color: #3b82f6;
+    border: none;
+    color: white;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #2563eb;
+    transform: scale(1.05);
+}
+
+.btn-secondary {
+    background-color: #6366f1;
+    color: white;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #4f46e5;
+    transform: scale(1.05);
+}
+
+.btn-warning {
+    background-color: #f59e0b;
+    color: white;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-warning:hover {
+    background-color: #d97706;
+    transform: scale(1.05);
+}
+
+.input {
+    border: 2px solid #d1d5db;
+    transition: border-color 0.3s;
+}
+
+.input:focus {
+    border-color: #3b82f6;
+    outline: none;
+}
+
+footer {
+    background-color: #2d2d2d;
+    position: relative;
+}
+
+.bg-gray-900 {
+    background-color: #1a1a1a;
+}
+
+.testimonial-bg {
+    background-image: url('https://images.pexels.com/photos/1035007/pexels-photo-1035007.jpeg?cs=srgb&dl=pexels-pixabay-1035007.jpg&fm=jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.about-bg {
+    background-image: url('https://images.pexels.com/photos/2438763/pexels-photo-2438763.jpeg?cs=srgb&dl=pexels-pixabay-2438763.jpg&fm=jpg');
+    background-size: cover;
+    background-position: center;
+}

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xio Follow Boosters - Reels Views</title>
+    <link rel="icon" href="./icon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@1.9.6/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.14.0/dist/full.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gotham:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.6.8/firebase-app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.6.8/firebase-auth.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.6.8/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        body {
+            font-family: 'Gotham', sans-serif;
+            background-image: url('./bg.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            color: #d1d5db;
+        }
+        nav {
+            backdrop-filter: blur(10px);
+            background-color: rgba(31, 41, 55, 0.7);
+        }
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.9);
+            min-width: 160px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-item {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s ease;
+            border-radius: 10px;
+        }
+        .dropdown-item:hover {
+            background-color: rgba(251, 191, 36, 0.3);
+            transform: translateX(2px);
+        }
+        .btn {
+            background: linear-gradient(90deg, #fbbf24, #f1f5f9);
+            border-radius: 50px;
+            padding: 10px 20px;
+            color: #1f2937;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        .icon {
+            width: 50px;
+            height: 50px;
+            animation: spin 3s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .package-box {
+            background-color: rgba(45, 55, 72, 0.6);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        .package-box:hover {
+            animation: breath 1s infinite;
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(45, 55, 72, 0.5);
+        }
+        @keyframes breath {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .highlight-package {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #fbbf24;
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1));
+            box-shadow: 0 4px 30px rgba(255, 186, 27, 0.5), 0 0 40px #fbbf24, 0 0 50px #fbbf24;
+            border-radius: 10px;
+            animation: flicker 1s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { opacity: 1; }
+            100% { opacity: 0.9; }
+        }
+        .testimonial-bg {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            padding: 40px 0;
+        }
+        .header-text {
+            font-family: 'Anton', sans-serif;
+            font-size: 4rem;
+            font-weight: bold;
+            color: #f8e2b7;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <nav class="p-5 shadow-xl">
+        <div class="container mx-auto flex justify-between items-center">
+            <img src="./icon.png" alt="XIO Icon" class="icon mr-2">
+            <h1 class="header-text" tabindex="0">Xio Follow Boosters</h1>
+            <ul class="flex space-x-5">
+                <li><a href="index.html" class="text-gray-300 hover:text-white" tabindex="0">Home</a></li>
+                <li><a href="#packages" class="text-gray-300 hover:text-white" tabindex="0">Packages</a></li>
+                <li class="dropdown">
+                    <a href="#" class="text-gray-300 hover:text-white" tabindex="0">Other Services</a>
+                    <div class="dropdown-content">
+                        <a href="likes.html" class="dropdown-item">Likes</a>
+                        <a href="story.html" class="dropdown-item">Story Views</a>
+                        <a href="reels.html" class="dropdown-item">Reels Views</a>
+                    </div>
+                </li>
+                <li><a href="#about" class="text-gray-300 hover:text-white" tabindex="0">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="text-center py-20">
+        <h2 class="header-text" tabindex="0">Reels Views Packages</h2>
+        <p class="sub-header-text mt-2" tabindex="0">Choose the best package for increasing your reels views.</p>
+    </section>
+    <section id="packages" class="py-20">
+        <div class="container mx-auto">
+            <h2 class="text-2xl font-bold text-center mb-10 text-white" tabindex="0">Our Reels Views Packages</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">100 Reels Views</h3>
+                    <p class="text-gray-400">$5</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('5', '100 Reels Views')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">500 Reels Views</h3>
+                    <p class="text-gray-400">$20</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('20', '500 Reels Views')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">1000 Reels Views</h3>
+                    <p class="text-gray-400">$35</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('35', '1000 Reels Views')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">2500 Reels Views</h3>
+                    <p class="text-gray-400">$65</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('65', '2500 Reels Views')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">5000 Reels Views</h3>
+                    <p class="text-gray-400">$120</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('120', '5000 Reels Views')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">10000 Reels Views</h3>
+                    <p class="text-gray-400">$200</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('200', '10000 Reels Views')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">15000 Reels Views</h3>
+                    <p class="text-gray-400">$260</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('260', '15000 Reels Views')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">20000 Reels Views</h3>
+                    <p class="text-gray-400">$350</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('350', '20000 Reels Views')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">30000 Reels Views</h3>
+                    <p class="text-gray-400">$500</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('500', '30000 Reels Views')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">40000 Reels Views</h3>
+                    <p class="text-gray-400">$600</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('600', '40000 Reels Views')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">50000 Reels Views</h3>
+                    <p class="text-gray-400">$800</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('800', '50000 Reels Views')">Purchase</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="bg-gradient-to-b from-[#4b5563] to-[#374151] p-5 shadow-xl text-center">
+        <p class="text-gray-400">&copy; 2023 Xio Follow Boosters - All Rights Reserved</p>
+    </footer>
+    <div class="chat-btn" onclick="toggleChat()" role="button" tabindex="0" aria-label="Chat with us"></div>
+    <div class="chat-window" id="chatWindow" aria-hidden="true">
+        <div class="chat-header">Live Chat Support</div>
+        <div class="chat-body" id="chatBody"></div>
+        <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="sendMessage(event)" aria-label="Chat input">
+    </div>
+    <script>
+        function redirectToAccount(price, packageDetail) {
+            window.location.href = `account.html?price=${price}&package=${packageDetail}`;
+        }
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.style.display = chatWindow.style.display === 'block' ? 'none' : 'block';
+            chatWindow.setAttribute('aria-hidden', chatWindow.style.display !== 'block');
+        }
+        function sendMessage(event) {
+            if (event.key === 'Enter') {
+                const input = document.getElementById('chatInput');
+                const message = input.value;
+                if (message) {
+                    const chatBody = document.getElementById('chatBody');
+                    chatBody.innerHTML += `<div class="text-right text-blue-500">${message}</div>`;
+                    input.value = '';
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                    setTimeout(() => {
+                        chatBody.innerHTML += `<div class="text-left text-gray-700">Thank you for your message! How can I assist you?</div>`;
+                        chatBody.scrollTop = chatBody.scrollHeight;
+                    }, 1000);
+                }
+            }
+        }
+        ScrollReveal().reveal('.container', { duration: 1000 });
+    </script>
+</body>
+</html>
+All four 

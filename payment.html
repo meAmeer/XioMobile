@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Xio Follow Boosters</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@1.9.6/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.14.0/dist/full.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.6.8/firebase-app.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.6.8/firebase-auth.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.6.8/firebase-firestore.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js" defer></script>
+    <style>
+        body { background-image: url('file:///C:/Users/ameer/Desktop/site/bg.jpg'); background-size: cover; background-position: center; color: #e5e7eb; }
+        .navbar { background-color: #2c3e50; }
+        .payment-button { background-color: rgba(173, 216, 230, 0.7); transition: all 0.3s; }
+        .payment-button:hover { opacity: 1; box-shadow: 0 0 20px rgba(173, 216, 230, 1); }
+        .section { background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 10px; padding: 20px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar p-5">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white">Xio Follow Boosters</h1>
+        </div>
+    </nav>
+    <section class="container mx-auto text-center py-20">
+        <h2 class="text-3xl font-bold text-white mb-5">Secure Your Boost Today</h2>
+        <div class="section mb-10">
+            <h3 class="text-2xl font-semibold text-white">Available Packages</h3>
+            <ul class="mt-5 text-gray-300">
+                <li>💼 Basic Package: 100 Followers - $9.99</li>
+                <li>🚀 Standard Package: 500 Followers - $39.99</li>
+                <li>✨ Premium Package: 1000 Followers - $69.99</li>
+            </ul>
+        </div>
+        <h2 class="text-3xl font-bold text-white">Payment Details</h2>
+        <p class="text-gray-300" id="payment-info"></p>
+        <div class="mt-5">
+            <button class="btn payment-button mt-5 w-48" onclick="processPayment('paypal')">Paypal</button>
+            <button class="btn payment-button mt-3 w-48" onclick="processPayment('bitcoin')">Bitcoin</button>
+            <button class="btn payment-button mt-3 w-48" onclick="processPayment('ethereum')">Ethereum</button>
+            <button class="btn payment-button mt-3 w-48" onclick="processPayment('googlepay')">Google Pay</button>
+        </div>
+        <div class="mt-10 text-gray-300">
+            <h3 class="font-bold">Your Payment is Secure</h3>
+            <p>We use industry-standard encryption to protect your personal information and payment data. Your transactions are processed securely through trusted payment gateways.</p>
+            <p>We do not store your payment details, ensuring that your financial information is kept safe.</p>
+        </div>
+        <div class="section mt-10">
+            <h3 class="text-2xl font-semibold text-white">Why Choose Us?</h3>
+            <p class="mt-5 text-gray-300">We pride ourselves on providing high-quality services that cater to your Instagram needs. Our packages are designed to give you maximum visibility and engagement on your profile.</p>
+            <p class="mt-3 text-gray-300">Join thousands of satisfied customers who have trusted Xio Follow Boosters to grow their social media presence.</p>
+            <h4 class="text-xl font-bold text-white mt-5">Customer Testimonials:</h4>
+            <p class="italic text-gray-300">"I gained over 500 followers in less than a week! Highly recommend!" - Sarah J.</p>
+            <p class="italic text-gray-300">"Xio truly knows how to boost engagement on my posts!" - Michael R.</p>
+        </div>
+    </section>
+    <footer class="bg-gray-800 p-5 shadow-xl text-center">
+        <p class="text-gray-400">&copy; 2023 Xio Follow Boosters - All Rights Reserved</p>
+    </footer>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const price = urlParams.get('price');
+        const packageDetail = urlParams.get('package');
+        const instaLink = urlParams.get('link');
+        document.getElementById('payment-info').innerText = `You are about to purchase ${packageDetail} for $${price} for the Instagram account: ${decodeURIComponent(instaLink)}`;
+        function processPayment(method) {
+            alert(`Processing ${method} payment of $${price} for ${packageDetail} to Instagram account: ${decodeURIComponent(instaLink)}`);
+        }
+    </script>
+</body>
+</html>

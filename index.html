@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xio Follow Boosters</title>
+    <link rel="icon" href="./icon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@1.9.6/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.14.0/dist/full.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gotham:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.6.8/firebase-app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.6.8/firebase-auth.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.6.8/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        body {
+            font-family: 'Gotham', sans-serif;
+            background-image: url('./bg.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            color: #d1d5db;
+        }
+        nav {
+            backdrop-filter: blur(10px);
+            background-color: rgba(31, 41, 55, 0.7);
+        }
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.9);
+            min-width: 160px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-item {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s ease;
+            border-radius: 10px;
+        }
+        .dropdown-item:hover {
+            background-color: rgba(251, 191, 36, 0.3);
+            transform: translateX(2px);
+        }
+        .btn {
+            background: linear-gradient(90deg, #fbbf24, #f1f5f9);
+            border-radius: 50px;
+            padding: 10px 20px;
+            color: #1f2937;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        .icon {
+            width: 50px;
+            height: 50px;
+            animation: spin 3s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .package-box {
+            background-color: rgba(45, 55, 72, 0.6);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        .package-box:hover {
+            animation: breath 1s infinite;
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(45, 55, 72, 0.5);
+        }
+        @keyframes breath {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .highlight-package {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #fbbf24;
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1));
+            box-shadow: 0 4px 30px rgba(255, 186, 27, 0.5), 0 0 40px #fbbf24, 0 0 50px #fbbf24;
+            border-radius: 10px;
+            animation: flicker 1s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { opacity: 1; }
+            100% { opacity: 0.9; }
+        }
+        .popular-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #fbbf24;
+            color: #1f2937;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .header-text {
+            font-family: 'Anton', sans-serif;
+            font-size: 4rem;
+            font-weight: bold;
+            color: #f8e2b7;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+        .sub-header-text {
+            font-size: 2rem;
+            color: white;
+            opacity: 0.9;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .sub-header-text:hover {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+        .chat-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+            background-image: url('C:/Users/ameer/Desktop/site/chat.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .chat-btn:hover {
+            background-color: #2563eb;
+        }
+        .chat-window {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 300px;
+            max-height: 400px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background-color: #1f2937;
+            z-index: 1000;
+        }
+        .chat-header {
+            background-color: #3b82f6;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .chat-body {
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            color: #e5e7eb;
+        }
+        .chat-input {
+            padding: 10px;
+            border: none;
+            width: calc(100% - 20px);
+            border-radius: 4px;
+            outline: none;
+            background-color: #374151;
+            color: #e5e7eb;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .slider-container {
+            text-align: center;
+            margin: 20px 0;
+            width: 90%;
+            margin: 0 auto;
+        }
+        .slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 12px;
+            border-radius: 10px;
+            background: #4b5563;
+            outline: none;
+            opacity: 0.9;
+            transition: background 0.3s;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            animation: glow 1s infinite alternate;
+        }
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+            100% { box-shadow: 0 0 40px rgba(255, 0, 0, 1); }
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fbbf24;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fbbf24;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .slider:hover::-webkit-slider-thumb {
+            transform: scale(1.2);
+        }
+        .slider:hover::-moz-range-thumb {
+            transform: scale(1.2);
+        }
+        .price-display {
+            color: white;
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+        .testimonial-bg {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            padding: 40px 0;
+        }
+        .about-bg {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="p-5 shadow-xl">
+        <div class="container mx-auto flex justify-between items-center">
+            <img src="./icon.png" alt="XIO Icon" class="icon mr-2">
+            <h1 class="header-text" tabindex="0">Xio Follow Boosters</h1>
+            <ul class="flex space-x-5">
+                <li><a href="#packages" class="text-gray-300 hover:text-white" tabindex="0">Packages</a></li>
+                <li><a href="#testimonials" class="text-gray-300 hover:text-white" tabindex="0">Testimonials</a></li>
+                <li class="dropdown">
+                    <a href="#" class="text-gray-300 hover:text-white" tabindex="0">Other Services</a>
+                    <div class="dropdown-content">
+                        <a href="likes.html" class="dropdown-item">Likes</a>
+                        <a href="story.html" class="dropdown-item">Story Views</a>
+                        <a href="reels.html" class="dropdown-item">Reels Views</a>
+                    </div>
+                </li>
+                <li><a href="#about" class="text-gray-300 hover:text-white" tabindex="0">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="text-center py-20 bg-gradient-to-b from-[#4b5563] to-[#374151]">
+        <h2 class="header-text" tabindex="0">Grow Your Instagram</h2>
+        <p class="sub-header-text mt-2" tabindex="0">Purchase followers and likes easily</p>
+    </section>
+    <section id="packages" class="py-20">
+        <div class="container mx-auto">
+            <h2 class="text-2xl font-bold text-center mb-10 text-white" tabindex="0">Our Packages</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">100 Followers</h3>
+                    <p class="text-gray-400">$10</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('10', '100 Followers')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">500 Followers</h3>
+                    <p class="text-gray-400">$40</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('40', '500 Followers')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">1000 Followers</h3>
+                    <p class="text-gray-400">$70</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('70', '1000 Followers')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">250 Followers</h3>
+                    <p class="text-gray-400">$25</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('25', '250 Followers')">Purchase</button>
+                </div>
+                <div class="highlight-package p-5 rounded-lg shadow-lg transition duration-300 relative" tabindex="0">
+                    <span class="popular-badge">Best Seller</span>
+                    <h3 class="font-semibold text-lg text-white">750 Followers</h3>
+                    <p class="text-gray-400">$55</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('55', '750 Followers')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">1500 Followers</h3>
+                    <p class="text-gray-400">$90</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('90', '1500 Followers')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">3000 Followers</h3>
+                    <p class="text-gray-400">$150</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('150', '3000 Followers')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">5000 Followers</h3>
+                    <p class="text-gray-400">$200</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('200', '5000 Followers')">Purchase</button>
+                </div>
+                <div class="package-box p-5 rounded-lg shadow-lg" tabindex="0">
+                    <h3 class="font-semibold text-lg text-white">10000 Followers</h3>
+                    <p class="text-gray-400">$350</p>
+                    <button class="btn w-full mt-5" onclick="redirectToAccount('350', '10000 Followers')">Purchase</button>
+                </div>
+            </div>
+            <div class="slider-container">
+                <p class="slider-value" id="sliderValue">Followers: 10</p>
+                <input type="range" min="10" max="50000" value="10" class="slider" id="followersRange" oninput="updateSliderValue()">
+                <p class="price-display" id="priceDisplay">Price: $1.00</p>
+                <button class="btn w-full mt-5" id="purchaseCustom" onclick="redirectToAccount(calculatePrice(), 'Custom Followers')">Purchase</button>
+            </div>
+        </div>
+    </section>
+    <section id="testimonials" class="testimonial-bg">
+        <div class="container mx-auto text-center">
+            <h2 class="text-2xl font-bold mb-5 text-white" tabindex="0">Customer Testimonials</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="bg-gray-800 p-5 rounded-lg shadow-lg" tabindex="0">
+                    <p class="text-gray-300 mb-2">"Amazing service! My followers increased instantly!"</p>
+                    <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                    <h3 class="font-semibold text-white">Sarah K.</h3>
+                </div>
+                <div class="bg-gray-800 p-5 rounded-lg shadow-lg" tabindex="0">
+                    <p class="text-gray-300 mb-2">"I love how quick and easy it was to boost my likes!"</p>
+                    <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                    <h3 class="font-semibold text-white">David R.</h3>
+                </div>
+                <div class="bg-gray-800 p-5 rounded-lg shadow-lg" tabindex="0">
+                    <p class="text-gray-300 mb-2">"Highly recommend! Worth every penny!"</p>
+                    <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                    <h3 class="font-semibold text-white">Jessica M.</h3>
+                </div>
+                <div class="bg-gray-800 p-5 rounded-lg shadow-lg" tabindex="0">
+                    <p class="text-gray-300 mb-2">"I've seen a huge difference in my account engagement!"</p>
+                    <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                    <h3 class="font-semibold text-white">Michael T.</h3>
+                </div>
+                <div class="bg-gray-800 p-5 rounded-lg shadow-lg" tabindex="0">
+                    <p class="text-gray-300 mb-2">"The best service I have used for growing my social media!"</p>
+                    <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                    <h3 class="font-semibold text-white">Emily J.</h3>
+                </div>
+                <div class="bg-gray-800 p-5 rounded-lg shadow-lg" tabindex="0">
+                    <p class="text-gray-300 mb-2">"Fast delivery and fantastic customer support!"</p>
+                    <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                    <h3 class="font-semibold text-white">Chris L.</h3>
+                </div>
+                <div class="bg-gray-800 p-5 rounded-lg shadow-lg" tabindex="0">
+                    <p class="text-gray-300 mb-2">"This service has helped my account grow exponentially!"</p>
+                    <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                    <h3 class="font-semibold text-white">Olivia P.</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="about" class="about-bg">
+        <div class="container mx-auto text-center">
+            <h2 class="text-2xl font-bold mb-5 text-white" tabindex="0">About Us</h2>
+            <p class="text-gray-300 mb-5" tabindex="0">We are dedicated to helping you grow your Instagram presence with ease and efficiency.</p>
+            <p class="text-gray-300 mb-1">Email: <a href="mailto:lol@gmail.com" class="text-blue-300">lol@gmail.com</a></p>
+            <p class="text-gray-300 mb-1">Phone: <a href="tel:+9778016816" class="text-blue-300">9778016816</a></p>
+            <p class="text-gray-300">Address: Poda Myre 123</p>
+        </div>
+    </section>
+    <footer class="bg-gradient-to-b from-[#4b5563] to-[#374151] p-5 shadow-xl text-center">
+        <p class="text-gray-400">&copy; 2023 Xio Follow Boosters - All Rights Reserved</p>
+    </footer>
+    <div class="chat-btn" onclick="toggleChat()" role="button" tabindex="0" aria-label="Chat with us"></div>
+    <div class="chat-window" id="chatWindow" aria-hidden="true">
+        <div class="chat-header">Live Chat Support</div>
+        <div class="chat-body" id="chatBody"></div>
+        <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="sendMessage(event)" aria-label="Chat input">
+    </div>
+    <script>
+        function redirectToAccount(price, packageDetail) {
+            window.location.href = `account.html?price=${price}&package=${packageDetail}`;
+        }
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.style.display = chatWindow.style.display === 'block' ? 'none' : 'block';
+            chatWindow.setAttribute('aria-hidden', chatWindow.style.display !== 'block');
+        }
+        function sendMessage(event) {
+            if (event.key === 'Enter') {
+                const input = document.getElementById('chatInput');
+                const message = input.value;
+                if (message) {
+                    const chatBody = document.getElementById('chatBody');
+                    chatBody.innerHTML += `<div class="text-right text-blue-500">${message}</div>`;
+                    input.value = '';
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                    setTimeout(() => {
+                        chatBody.innerHTML += `<div class="text-left text-gray-700">Thank you for your message! How can I assist you?</div>`;
+                        chatBody.scrollTop = chatBody.scrollHeight;
+                    }, 1000);
+                }
+            }
+        }
+        function updateSliderValue() {
+            const slider = document.getElementById('followersRange');
+            const valueDisplay = document.getElementById('sliderValue');
+            const priceDisplay = document.getElementById('priceDisplay');
+            valueDisplay.innerText = `Followers: ${slider.value}`;
+            priceDisplay.innerText = `Price: $${calculatePrice()}`;
+        }
+        function calculatePrice() {
+            const slider = document.getElementById('followersRange');
+            const followers = slider.value;
+            return (followers * 0.1).toFixed(2);
+        }
+        ScrollReveal().reveal('.container', { duration: 1000 });
+    </script>
+</body>
+</html>
